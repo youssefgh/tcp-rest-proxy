@@ -33,18 +33,25 @@ public class ServiceProxy {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response submit(Call call) throws IOException {
-        Socket socket = new Socket(call.getServer(), call.getPort());
-        socket.setSoTimeout(10000);
-        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-        for (String procedure : call.getProcedureList()) {
-            printWriter.println(procedure);
+        if(call.getPort() < 50001 || call.getPort() > 50200) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        printWriter.flush();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        List<String> resultList = new ArrayList<>();
-        String s;
-        for (int i = 0; i < call.getProcedureList().size(); i++) {
-            resultList.add(bufferedReader.readLine());
+        try {
+            Socket socket = new Socket(call.getServer(), call.getPort());
+            socket.setSoTimeout(10000);
+            PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+            for (String procedure : call.getProcedureList()) {
+                printWriter.println(procedure);
+            }
+            printWriter.flush();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            List<String> resultList = new ArrayList<>();
+            String s;
+            for (int i = 0; i < call.getProcedureList().size(); i++) {
+                resultList.add(bufferedReader.readLine());
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         return Response.ok(resultList).build();
     }
