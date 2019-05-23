@@ -33,25 +33,21 @@ public class ServiceProxy {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response submit(Call call) throws IOException {
-        if(call.getPort() < 50001 || call.getPort() > 50200) {
+        if (call.getPort() < 50001 || call.getPort() > 50200) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        try {
-            Socket socket = new Socket(call.getServer(), call.getPort());
-            socket.setSoTimeout(10000);
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-            for (String procedure : call.getProcedureList()) {
-                printWriter.println(procedure);
-            }
-            printWriter.flush();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            List<String> resultList = new ArrayList<>();
-            String s;
-            for (int i = 0; i < call.getProcedureList().size(); i++) {
-                resultList.add(bufferedReader.readLine());
-            }
-        } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        Socket socket = new Socket("172.17.0.1", call.getPort());
+        socket.setSoTimeout(10000);
+        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+        for (String procedure : call.getProcedureList()) {
+            printWriter.println(procedure);
+        }
+        printWriter.flush();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        List<String> resultList = new ArrayList<>();
+        String s;
+        for (int i = 0; i < call.getProcedureList().size(); i++) {
+            resultList.add(bufferedReader.readLine());
         }
         return Response.ok(resultList).build();
     }
