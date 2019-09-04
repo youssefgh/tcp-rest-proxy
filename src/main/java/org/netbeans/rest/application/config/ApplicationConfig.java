@@ -18,7 +18,7 @@ public class ApplicationConfig extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        Set<Class<?>> resources = new java.util.HashSet<>();
+        var resources = new java.util.HashSet<Class<?>>();
         addRestResourceClasses(resources);
         resources.add(JacksonFeature.class);
         return resources;

@@ -22,9 +22,7 @@ public class ObjectMapperResolver implements ContextResolver<ObjectMapper> {
 
     public ObjectMapperResolver() {
         mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);/*
-        mapper.enableDefaultTyping();
-        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT);*/
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.registerModule(new JavaTimeModule());
     }
 

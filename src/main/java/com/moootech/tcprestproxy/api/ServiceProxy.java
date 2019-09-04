@@ -33,20 +33,21 @@ public class ServiceProxy {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response submit(Call call) throws IOException {
+        //TODO read from param
         if (call.getPort() < 50001 || call.getPort() > 50200) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Socket socket = new Socket("172.17.0.1", call.getPort());
+        var socket = new Socket("172.17.0.1", call.getPort());
         socket.setSoTimeout(10000);
-        PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-        for (String procedure : call.getProcedureList()) {
+        var printWriter = new PrintWriter(socket.getOutputStream());
+        call.getProcedureList().forEach((procedure) -> {
             printWriter.println(procedure);
-        }
+        });
         printWriter.flush();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         List<String> resultList = new ArrayList<>();
         String s;
-        for (int i = 0; i < call.getProcedureList().size(); i++) {
+        for (var procedureList : call.getProcedureList()) {
             resultList.add(bufferedReader.readLine());
         }
         return Response.ok(resultList).build();
