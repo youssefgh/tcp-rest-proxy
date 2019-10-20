@@ -22,8 +22,8 @@ public class StartupBean {
     private int port;
 
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        var serverArg = System.getProperty("server");
-        var portArg = System.getProperty("port");
+        var serverArg = System.getenv("server");
+        var portArg = System.getenv("port");
         if (serverArg != null && portArg != null) {
             this.server = serverArg;
             this.port = Integer.parseInt(serverArg);
