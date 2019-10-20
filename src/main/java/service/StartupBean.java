@@ -26,7 +26,7 @@ public class StartupBean {
         var portArg = System.getenv("port");
         if (serverArg != null && portArg != null) {
             this.server = serverArg;
-            this.port = Integer.parseInt(serverArg);
+            this.port = Integer.parseInt(portArg);
         } else {
             this.server = "localhost";
             this.port = 50001;
