@@ -5,7 +5,6 @@
  */
 package com.moootech.tcprestproxy.api;
 
-import com.moootech.tcprestproxy.core.Call;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -21,6 +21,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.moootech.tcprestproxy.core.Call;
+
 import service.StartupBean;
 
 /**
@@ -30,7 +33,7 @@ import service.StartupBean;
 @Path("proxy")
 @RequestScoped
 public class ServiceProxy {
-    
+
     @Inject
     private StartupBean startupBean;
 
@@ -47,8 +50,7 @@ public class ServiceProxy {
         printWriter.flush();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         List<String> resultList = new ArrayList<>();
-        String s;
-        for (var procedureList : call.getProcedureList()) {
+        for (int i = 0; i < call.getProcedureList().size(); i++) {
             resultList.add(bufferedReader.readLine());
         }
         return Response.ok(resultList).build();
