@@ -1,0 +1,27 @@
+<server description="Liberty server">
+    <featureManager>
+        <feature>cdi-2.0</feature>
+        <feature>jaxrs-2.1</feature>
+        <feature>jsonp-1.1</feature>
+        <feature>websocket-1.1</feature>
+        <feature>mpRestClient-1.4</feature>
+
+        <feature>ejb-3.2</feature>
+        <feature>jms-2.0</feature>
+        <feature>jsonb-1.0</feature>
+
+        <feature>mpConfig-1.4</feature>
+        <feature>mpHealth-2.2</feature>
+        <feature>mpJwt-1.1</feature>
+        <feature>mpMetrics-2.3</feature>
+    </featureManager>
+
+    <webApplication location="${finalName}.war" contextRoot="/" />
+
+    <httpEndpoint host="*" httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint" />
+
+    <basicRegistry id="basic" realm="dummyRealm"></basicRegistry>
+
+    <ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore" trustDefaultCerts="true" />
+
+</server>
