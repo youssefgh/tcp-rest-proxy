@@ -4,16 +4,17 @@
         <feature>jaxrs-2.1</feature>
         <feature>jsonp-1.1</feature>
         <feature>websocket-1.1</feature>
-        <feature>mpRestClient-1.4</feature>
+        <feature>beanValidation-2.0</feature>
 
         <feature>ejb-3.2</feature>
         <feature>jms-2.0</feature>
         <feature>jsonb-1.0</feature>
 
-        <feature>mpConfig-1.4</feature>
-        <feature>mpHealth-2.2</feature>
-        <feature>mpJwt-1.1</feature>
-        <feature>mpMetrics-2.3</feature>
+        <feature>mpConfig-2.0</feature>
+        <feature>mpHealth-3.0</feature>
+        <feature>mpJwt-1.2</feature>
+        <feature>mpMetrics-3.0</feature>
+        <feature>mpRestClient-2.0</feature>
     </featureManager>
 
     <webApplication location="${finalName}.war" contextRoot="/" />
